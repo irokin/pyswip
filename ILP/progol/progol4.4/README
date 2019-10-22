@@ -1,0 +1,111 @@
+Progol source code and examples (16.3.09)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Contained in this directory is the source code, examples and man page
+for the Inductive Logic Programming system Progol (Version 4.4),
+together with a new tutorial on Progol4.4 by S. Muggleton and J. Firth
+(this was updated and extended in July 1999). The tutorial is a
+chapter which is to appear in the
+book on ILP&KDD to be edited by Saso Dzeroski and Nada Lavrac.
+
+Progol is freely available for academic research and teaching. Progol is
+also available under license for commercial research. To apply for such a
+license, please write to s.muggleton@imperial.ac.uk.
+
+Progol4.4 extends Progol4.2 in the following ways.
+
+1. Use of constraints for parameter estimation. This is an adaptation
+	of the `lazy-evaluation' mechanism, first proposed by
+	Srinivasan and Camacho. For instance, suppose we want to find
+	upper bounds for the predicate lessthan/2. First,
+	use declarations such as the following.
+
+  :- modeb(1,lessthan(+float,#float))?
+  :- constraint(lessthan/2)?
+
+  The constraint declaration says that any lessthan/2 atom in the
+  most-specific clause should have a Skolem constant in place of the upper
+  bound constant (#float above). In the search, during any refinement which
+  introduces a constraint atom, the flag solving is turned on, and the
+  user-defined predicate is given all substitutions from positive and
+  negative examples as a list of lists of lists(takes the form [P,N] where
+  P is from the positive examples and N from the negatives, and P,N are
+  lists of lists, each list giving all substitutions
+  related to a particular example), and returns an appropriate
+  substitution for the constant. This constant is used in place of the Skolem
+  constant in subsequent testing of the refined clause and its
+  refinements. Thus definitions for constraint predicates have to
+  have at least two clauses, having the guards `solving' and
+  `not(solving)' to define respectively the procedure for computing the
+  parameter and the normal application of the predicate.
+
+  Although originally not intended for such by Srinivasan and
+  Camacho, the constraint solving mechanism can be applied to
+  user-defined predicate invention. This is demonstrated in the release 4.4
+  example files.
+2. permute/1 can be used for randomly permuting the clauses in
+  a file. This is useful for carrying out N-fold cross-validation.
+3. The source directory contains qsample.c which can be used for
+  randomly sampling training and test sets. Comments in qsample.c
+  explain how to use the program.
+4. The Clocksin and Mellish Prolog built-in predicate assertz/1 has been added.
+5. The new built-in predicate aleave/1 carried out analogical prediction
+	as described in the paper "Analogical Prediction" by Stephen Muggleton
+	and Michael Bain (submitted to ILP'99).
+6. A sample Unix script which runs on the animals.pl training set has
+	been placed in examples4.2 to allow you to see whether you get
+	the same output. The relevant files in that directory are as follows.
+
+	Runanimals - Unix shell script to run progol on animals file
+	animals.pl - training set (20 examples sampled with replacement)
+	anim_test.pl - test set (151 examples sampled indepently from training
+	set)
+	animals.out - output from Runanimals run on a Linux Redhat Intel
+				pentium PC.
+
+
+Progol4.1 is fully described in the paper ``Inverse entailment and Progol''
+by Stephen Muggleton which appears in the New Generation Computing
+Journal, Vol. 13, pp. 245-286. This paper is available
+as gzipped Postscript by anonymous ftp from ftp.cs.york.ac.uk in
+file pub/ML_GROUP/Papers/InvEnt.ps.gz.
+
+The mechanisms used for learning from positive examples are described
+in the paper ``Learning from positive data'', which appeared in the
+Proceedings of the ILP96 workshop, Springer 1997 and the paper
+``Stochastic logic programming'' which appeared in ``Advances in
+Inductive Logic Programming'' ed. L. De Raedt, Ohmsha/IOS Press, 1996.
+These papers can both be obtained as Postscript by anonymous ftp from
+ftp.cs.york.ac.uk in files pub/ML_GROUP/Papers/poslearn1.ps
+and pub/ML_GROUP/Papers/slp.ps.
+
+To get hold of Progol4.4 use ftp to copy the following
+files to your directory.
+
+	progol4_4.tar.gz
+	expand.sh
+
+Now do the following shell command:
+
+$ expand.sh
+
+This should produce the subdirectories, `examples4.2',  `examples4.4',
+`man' and `source'. progol and qsample will be automatically compiled in
+subdirectory `source'.
+
+Include progol's source directory in your .login file path entry to allow
+you to use progol as a command.  Remember to source your .login file before
+continuing.
+
+Try running Progol on all of the examples and see what happens.
+
+
+
+*****************************************************************************
+Professor Stephen H Muggleton            Tel: +44 20 7594 8307 (direct)
+Computational Bioinformatics Laboratory  Bridget Gundry: +44 20 7594 1245
+Department of Computing                  Fax: +44 20 7581 8024
+Imperial College                         Email: shm@doc.ic.ac.uk
+180 Queens Gate                          URL: http://www.doc.ic.ac.uk/~shm/
+London SW7 2BZ
+United Kingdom
+*****************************************************************************

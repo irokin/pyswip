@@ -1,0 +1,62 @@
+Progol source code and examples (11.9.95)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Contained in this directory is the
+source code, manual and examples for the Inductive Logic
+Programming system Progol (Version 4.1). Progol4.1 is now
+available for general distribution. Progol is fully
+described in the paper ``Inverse entailment and Progol''
+by Stephen Muggleton which appears in New Generation Computing
+Journal, Vol. 13, pp. 245-286. This paper is available
+as gzipped Postscript by anonymous ftp from
+ftp.comlab.ox.ac.uk in file pub/Packages/ILP/Papers/InvEnt.ps.gz.
+Progol is freely available for academic research.
+Progol is also available under license for commercial
+research. To apply for such a license, please write
+to steve@comlab.ox.ac.uk.
+
+In addition to the man pages for Progol4.1
+there are 3 typescript files containing the output of Progol
+running on the animals example files to show you how
+Progol is operated. Having followed these you should be able
+to run Progol on the other demonstration examples. The example
+files also contain comments.
+
+To get hold of Progol4.1 use get in ftp to copy the following
+files to your directory.
+
+	progol4_1.tar.gz
+	expand
+
+Now do the following shell command:
+
+$ expand
+
+This should produce the subdirectories, `examples', `source' and `man'
+and complile progol in subdirectory `man'.
+
+Include progol's source directory in your
+.login file path entry to allow you to use progol as a command.
+Remember to source your .login file before continuing.
+Next read the script files and try running Progol.
+
+$ cd ../examples
+$ more animals.sc1
+$ more animals.sc2
+$ more animals.sc3
+$ progol animals
+$ progol arch
+$ ...
+
+Try running Progol on all of the examples and see what happens.
+
+Next have a look at the Progol manual pages. This can be done
+as follows.
+
+$ cd ../man
+$ nroff -man advise.1 | more
+$ ...
+
+Have fun!
+
+	Stephen Muggleton,
+	Oxford University Computing Laboratory

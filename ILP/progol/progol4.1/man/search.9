@@ -1,0 +1,30 @@
+.TH search 9 "September 7, 1994"
+.SH NAME
+Searching the subsumption lattice with
+.I Progol.
+.SH DESCRIPTION
+When constructing hypothesis clauses consistent with the
+examples
+.I
+Progol
+does a general-to-specific search based on theta-subsumption.
+Unlike many other ILP systems, the lattice searched by Progol
+is bounded on top and bottom. The top of the lattice is the
+empty clause, and the bottom is tje most-specific inverse
+resolvent for an example, within the constraints of the
+mode language.
+.I
+Progol
+thus does "Mode-directed Inverse Resolution" (MDIR). 
+Between these two points in the subsumption lattice,
+.I
+Progol
+does a best-first search using an approximate compression
+measure. The compression of any clause found by
+.I
+Progol
+is calculated as P - N - C, where P = number of positive
+examples covered by the clause, N = number of negative
+examples covered by the clause, and C = number of literals
+in the clause.
+.SH "SEE ALSO"

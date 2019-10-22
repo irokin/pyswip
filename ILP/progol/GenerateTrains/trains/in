@@ -1,0 +1,8 @@
+[drawtrain]?
+make(20,train)?
+system('ghostview train.eps')?
+[train]?
+examples('train1.pl')?
+[learn]?
+generalise(east/1)?
+quit?

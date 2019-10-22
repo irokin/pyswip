@@ -1,0 +1,90 @@
+.TH mode 1 "September 7, 1994"
+.SH NAME
+mode \- declare mode of call for predicates that can appear in a hypothesis
+constructed by
+.I Progol.
+.SH SYNOPSIS
+.B modeh(RecallNumber,HeadTemplate)?
+.B modeb(RecallNumber,BodyLiteralTemplate)?
+.SH DESCRIPTION
+.B
+modeh/2
+and 
+.B
+modeb/2  describe the `forms' of literals that are allowed
+in the head and body of a hypothesised clause.
+.I RecallNumber
+specifies an upper bound on the number of successful calls
+to the predicate specified in the mode declaration.
+.I HeadTemplate
+specifies all legal forms for a head literal in a
+clause constructed by
+.I
+Progol.
+.I BodyLiteralTemplate
+specifies all legal forms for a body literal in a
+clause constructed by
+.I
+Progol.
+.SH OPTIONS
+.I RecallNumber
+can be either 
+.TP
+.B a number
+specifying an upper bound number of successful calls to the predicate
+.TP
+.B *
+specifying that the number of successful calls to the predicate
+is bounded above by some large integer value (currently 100).
+.TP
+.I HeadTemplate, BodyLiteralTemplate
+are predicate templates of the form
+.TP
+.B p(ArgSpec, ArgSpec,...)
+where, for each argument 
+.I ArgSpec
+is of the form
+.I Mode Type
+or
+.I f(ArgSpec, ArgSpec,...)
+where f is a function symbol.
+In the former,
+.I Mode Type
+is specified as follows.
+.I Mode
+is one of the following
+.ne 12
+.RS
+.TP
+.B +
+indicates the argument is an input. That is, in all calls to this
+predicate, the argument will be bound to a value.
+.TP
+.B -
+indicates the argument is an output. That is, in all calls to this
+predicate, the argument will output a term.
+.TP
+.B #
+indicates that a constant should appear in this argument.
+.RE
+.TP
+.I Type
+is the type of the argument. Types are unary predicates defined
+in the background knowledge, or Prolog built-in functions.
+.TP
+There can be more than one mode of call for each predicate name.
+.SH EXAMPLES
+Here are some example of specifying modes:
+.DS 3 1
+modeh(1,mem(+number,[+number|+list]))?
+modeb(1,mem(+number,+list))?
+
+modeb(1,dec(+integer,-integer))?
+modeb(1,mult(+integer,+integer,-integer))?
+modeb(1,plus(+integer,+integer,-integer))?
+modeb(1,+integer=#integer)?
+
+modeb(*,has_car(+train,-car))?
+.DE
+.SH "SEE ALSO"
+types

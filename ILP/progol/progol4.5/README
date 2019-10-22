@@ -1,0 +1,71 @@
+Progol source code and examples (21.09.00)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Contained in this directory is the source code, examples and man page
+for the Inductive Logic Programming system Progol (Version 4.5),
+described in Stephen Muggleton's paper "Learning Stochastic Logic Programs"
+in the AAAI2000 workshop on Learning Stochastic Relation Models
+(paper is available from
+ftp://ftp.cs.york.ac.uk/pub/ML_GROUP/Papers/slplearn.ps.gz).
+
+Progol is freely available for academic research and teaching. Progol is
+also available under license for commercial research. To apply for such a
+license, please write to stephen@cs.york.ac.uk.
+
+Progol4.5 extends Progol4.4 in its incorporation of user-defined
+evaluation functions. The following table shows the names of predicates
+used to allow use of these evaluation functions.
+
+Variable	Meaning			Built-in	User-defined
+p		Positive coverage	pos_cover(P1)	user_pos_cover(P2)
+n		Negative coverage	neg_cover(N1)	user_neg_cover(N2)
+c		Hypothesis size		hyp_size(C1)	user_hyp_size(C2)
+h		Hypothesis remainder	hyp_rem(H1)	user_hyp_rem(H2)
+
+For instance, in order to implement a maximum likelihood search user_hyp_size
+is set to a constant, eg by including the following in the Progol input file.
+
+	user_hyp_size(1).
+
+The first version of Progol, Progol4.1, is fully described in the
+paper ``Inverse entailment and Progol'' by Stephen Muggleton which appears
+in the New Generation Computing Journal, Vol. 13, pp. 245-286. This paper
+is available as gzipped Postscript by anonymous ftp from ftp.cs.york.ac.uk in
+file pub/ML_GROUP/Papers/InvEnt.ps.gz.
+
+The mechanisms used for learning from positive examples are described
+in the paper ``Learning from positive data'', which appeared in the
+Proceedings of the ILP96 workshop, Springer 1997 and the paper
+``Stochastic logic programming'' which appeared in ``Advances in
+Inductive Logic Programming'' ed. L. De Raedt, Ohmsha/IOS Press, 1996.
+These papers can both be obtained as Postscript by anonymous ftp from
+ftp.cs.york.ac.uk in files pub/ML_GROUP/Papers/poslearn1.ps
+and pub/ML_GROUP/Papers/slp.ps.
+
+To get hold of Progol4.5 use ftp to copy the following
+files to your directory.
+
+	progol4_5.tar.gz
+	expand.sh
+
+Now do the following shell command:
+
+$ expand.sh
+
+This should produce the subdirectories, `examples4.2',  `examples4.4',
+`examples4.5', `man' and `source'. progol and qsample will be automatically
+compiled in subdirectory `source'.
+
+Include progol's source directory in your .login file path entry to allow
+you to use progol as a command.  Remember to source your .login file before
+continuing.
+
+Try running Progol on all of the examples and see what happens.
+
+==
+
+	Stephen Muggleton,
+	Department of Computer Science,
+	University of York, Heslington, York, YO1 5DD.
+	Tel: 01904 434750, Fax: 01904 432767,
+	Email: stephen@cs.york.ac.uk.
+	WWW: http://www.cs.york.ac.uk/~stephen

@@ -1,0 +1,45 @@
+.TH Miscellaneous 1 "September 7, 1994"
+.SH NAME
+Commands less frequently used in
+.I Progol.
+.SH DESCRIPTION
+The following commands in
+.I
+Progol
+are used less frequently:
+.TP
+.B commutative(PredicateName/Arity)?
+states input arguments for all PredicateName/Arity predicates are unordered.
+.TP
+.B commutatives?
+shows predicates declared to be commutative.
+.TP
+.B modes?
+shows head and body modes of predicates.
+.TP
+.B reductive?
+disallows literals in the body to have terms more complex than
+most complex term in the clause head. Term complexity is measured
+as follows: Variables = 1, Term = 2 + sum of argument complexities,
+Constant = 2, Integer = 2 and Real = 2.
+.TP
+.B noreductive?
+disables reductive constraint.
+.TP
+.B split?
+allows "variable-splitting" i.e. breaking of variable co-references
+in the most specific clause constructed in the first step of the
+.I
+generalise/1
+command. This enables a more complete search of the subsumption lattice
+above the most specific clause.
+.TP
+.B nosplit?
+disables variable-splitting.
+
+.SH "NOTE"
+By default,
+.I
+Progol
+uses the reductive constraint and disables variable-splitting.
+.SH "SEE ALSO"

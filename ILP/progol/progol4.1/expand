@@ -1,0 +1,5 @@
+gunzip progol4_1.tar.gz
+tar xvf progol4_1.tar
+cd source
+make
+cd ..

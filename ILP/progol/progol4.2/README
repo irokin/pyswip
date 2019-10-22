@@ -1,0 +1,86 @@
+Progol source code and examples (12.01.98)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Contained in this directory is the source code, examples and man page
+for the Inductive Logic Programming system Progol (Version 4.2),
+together with a new PostScript manual by Samuel Roberts.
+Progol4.2 differs from version 4.1 in its ability to learn from positive
+examples only. When doing so it is necessary to set the flag `posonly'.
+Example sets containing positives only can be found in the directory
+`positives'.
+
+Other slight changes are as follows.
+
+1) set(noise,10)? now means that noise tolerance when constructing
+	particular clauses is 10% rather than saying that up to 10
+	examples will be treated as noise.
+2) settings? now gives all numerical and logical parameter settings.
+3) For binary parameters now use set/1 and unset/1. For instance,
+	unset(reductive)? or set(searching)? The reductive flag
+	is now OFF by default.
+4) The new predicates leave/1 allows you to do leave-one-out
+	cross-validation of a given predicate.
+5) The new predicate test/1 allows you to test a learned theory
+	against a named test set of ground instances.
+6) The user-defined predicate prune(Head,Body) allows programmable
+	declarative bias. This predicate is tested on every
+	clause before evaluation on positive and negative examples.
+	If it succeeds then the clause, together with all its
+	refinements are pruned from the search. An example of this
+	is found in positives/range.pl
+7) When the `posonly' flag is set then all negative examples
+	are treated as integrity constraints.
+8) Depth-bound failure due to a low setting of `h' now gives
+	a warning.
+9) sample/3 allows random sample of instances to be produced
+	using Stochastic Logic Programs.
+10) set(inflate,X) allows the user to `inflate' examples,
+	by having each example counted more than once. X is an
+	integer percentage. See Michalski train example in positives/train.pl.
+11) unset(cover) replaces cover-testing by full entailment testing.
+	This is less efficient but important for examples involving
+	recursion (see positives/member.pl).
+
+Progol4.1 is fully described in the paper ``Inverse entailment and Progol''
+by Stephen Muggleton which appears in the New Generation Computing
+Journal, Vol. 13, pp. 245-286. This paper is available
+as gzipped Postscript by anonymous ftp from ftp.comlab.ox.ac.uk in
+file pub/Packages/ILP/Papers/InvEnt.ps.gz.
+
+The mechanisms used for learning from positive examples are described
+in the paper ``Learning from positive data'', to appear in the
+Proceedings of the ILP96 workshop, Springer 1997 and the paper
+``Stochastic logic programming'' which appeared in ``Advances in
+Inductive Logic Programming'' ed. L. de Raedt, Ohmsha/IOS Press, 1996.
+These papers can both be obtained as Postscript by anonymous ftp from
+ftp.comlab.ox.ac.uk in files pub/Packages/ILP/Papers/poslearn1.ps
+and pub/Packages/ILP/Papers/slp.ps.
+
+Progol is freely available for academic research.  Progol is also available
+under license for commercial research. To apply for such a license, please
+write to steve@cs.york.ac.uk.
+
+To get hold of Progol4.2 use get in ftp to copy the following
+files to your directory.
+
+	progol4_2.tar.gz
+	expand
+	manual.ps
+
+Now do the following shell command:
+
+$ expand
+
+This should produce the subdirectories, `positives' and `source'
+and complile progol in subdirectory `source'.
+
+Include progol's source directory in your
+.login file path entry to allow you to use progol as a command.
+Remember to source your .login file before continuing.
+
+Try running Progol on all of the examples and see what happens.
+
+Have fun!
+
+	Stephen Muggleton,
+	Computer Science Department
+	University of York

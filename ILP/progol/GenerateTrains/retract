@@ -1,0 +1,4 @@
+rm trains/train*
+tar cvf trains.tar trains
+gzip trains.tar
+rm -r trains

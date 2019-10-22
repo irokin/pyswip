@@ -1,0 +1,4 @@
+rm source/*.o source/progol
+tar cvf progol4_1.tar man examples source
+gzip progol4_1.tar
+rm -r man examples source

@@ -1,0 +1,57 @@
+.TH set 1 "September 7, 1994"
+.SH NAME
+set \- set parameters for 
+.I Progol.
+.SH SYNOPSIS
+.B set(Parameter,IntegerValue)?
+.B settings?
+.SH DESCRIPTION
+.B
+set/2
+allows a range of parameters to be set.
+These parameters control the resources available to
+.I Progol
+, maximum cardinality of clauses, depth bound for the theorem prover,
+maximum layers of new variables, relaxing consistency,
+and report verbosity.
+.B
+settings/0 shows present parameter settings.
+.SH OPTIONS
+.TP
+.B set(nodes,MaxNodes)
+set upper bound on the nodes to be explored by
+.I Progol
+when searching for a consistent clause (default 10000).
+.TP
+.B set(c,Length)
+set upper bound on number of literals in the body of a consistent clause (default 4).
+.TP
+.B set(h,Depth)
+set depth bound on theorem prover (default 30).
+.TP
+.B set(i,IVal)
+set upper bound on layers of new variables (default 5).
+.TP
+.B set(noise,MaxNegatives)
+set upper bound on the number of negatives that can be covered
+by an acceptable clause (default 0).
+.TP
+.B set(verbose,Verbosity)
+set report verbosity for
+.I Progol.
+Increasing Verbosity makes 
+.I Progol
+more talkative (default 1).
+
+.SH EXAMPLES
+Here are the default settings for
+.I Progol.
+.DS 3 1
+        set(nodes,10000)?
+        set(c,4)?
+        set(h,10000)?
+        set(i,5)?
+        set(noise,0)?
+        set(verbose,1)?
+.DE
+.SH "SEE ALSO"

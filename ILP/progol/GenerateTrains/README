@@ -1,0 +1,49 @@
+Random train generation		- S. Muggleton, 2/4/1998.
+~~~~~~~~~~~~~~~~~~~~~~~
+This is a rig for randomly generating and depicting "Michalski-style"
+trains. It contains code used in the ML-challenge of 1994
+(see Donald Michie's article in "Computing", in the file "computing.tex",
+and the submission to the mllist in file "mllist") in an easily
+useable form.
+
+To copy and unpack the software do the following.
+
+i) Copy the files "expand" and "trains.tar.gz" to your filespace.
+ii) Run the command "expand". This creates a directory called
+	"trains".
+iii) Use the command "cd trains" to go into the created directory.
+
+To generate trains, all you need to do is the following.
+
+a) Make sure you have CProgol installed (you can get this
+	from ftp.cs.york.ac.uk in pub/ML_GROUP/progol4.4).
+b) Put your desired target concept in the file "concept.pl" (comment
+	out the present one).
+c) Run the command "dorun" (in the directory "trains").
+d) Look at the ghostview images (display of the file "train.eps").
+e) Look at the randomly generated train descriptions in the files
+	"learn.pl" and "train1.pl".
+f) Iterate from c). You should get a different set of randomly
+	generated trains each time.
+
+If you want to vary the number of trains randomly generated, then
+change the number in the following line in file "in".
+
+	make(20,train)?
+
+The command "dorun" does the following.
+
+1. Generates 20 random trains.
+2. Classifies them according to the concept definition in concept.pl.
+	This generates P positive and N negative examples of eastbound trains.
+3. Equalises the number of pos/neg examples to min(P,N) and
+	writes them as a Progol input file in train1.pl. Mode
+	declarations for this file are learn.pl.
+4. Draws the trains in train.pl. Uses the drawing programs based on
+	the postscript generation predicates in ps.pl.
+5. Runs ghostview to display the trains.
+6. Runs Progol on learn.pl.
+
+One difference from the ML-challenge code of 1994 is that the
+trains are generated in both list form (the file "train.pl")
+and as a set of individual facts about carriages etc. ( in "train1.pl").

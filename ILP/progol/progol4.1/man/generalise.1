@@ -1,0 +1,47 @@
+.TH generalise 1 "September 7, 1994"
+.SH NAME
+generalise \- generalises all clauses with a given predicate symbol
+.SH SYNOPSIS
+.B generalise(PredicateName/Arity)?
+.SH DESCRIPTION
+.B generalise/2
+is the basic command for experimenting with
+.I Progol.
+When issued
+.I Progol
+does the following:
+.RS
+.TP
+.B Step 1: Select first
+.I Progol
+selects the first clause with given predicate symbol. This is normally
+the first example to be generalised.
+.TP
+.B Step 2: Most specific clause
+for each example selected in Step 1,
+.I Progol
+constructs the most specific definite clause that implies the example.
+.TP
+.B Step 3: General to specific reduction
+for each most specific clause constructed in Step 2,
+.I Progol
+searches the subsumption lattice to find a more general clause that
+is consistent and has most pseudo-compression. Consistency
+is as defined by the noise setting using
+.I set(noise,Value).
+.TP
+.B Step 4: Remove redundant
+.I Progol
+removes all clauses made redundant by the generalised clause
+found in Step 3. This normally includes all examples covered
+by this clause.
+.TP
+.B Step 5: Repeat
+.I Progol
+repeats the cycle of Steps 1 - 4 until the pool of seed examples
+reduces to an empty set.
+.SH NOTE
+.B generalise/2
+does not necessarily produce the most pseudo-compressive
+set of clauses for a given example set. 
+.SH "SEE ALSO"

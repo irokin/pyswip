@@ -1,0 +1,49 @@
+.TH types 9 "September 7, 1994"
+.SH NAME
+Specifying type information in 
+.I Progol.
+.SH DESCRIPTION
+.B
+Types have to be specified for every argument of all predicates
+to be used in constructing a hypothesis. This specification is
+done by a
+.I mode
+declaration.
+Type definitions can either be built-in to Prolog (for example,
+.I int/1
+or 
+.I float/1
+or unary predicates in background knowledge. 
+In addition to most standard Prolog built-in definitions
+.I
+Progol
+provides the following that could be of
+use in defining types:
+.TP
+.B any(X)
+any/1 is true for any term X.
+.TP
+.B float(X)
+float/1 is true if X is a floating point number.
+.TP
+.B int(X)
+int/1 is true if X is an integer.
+.TP
+.B nat(X)
+nat/1 succeeds when X is a natural number.
+.TP
+.B constant(X)
+constant/1 succeeds when X is a constant.
+.SH EXAMPLES
+Here is a type definition for a list of integers:
+
+.DS 3 1
+list([]).
+
+list([H|T]):-
+
+	int(H),
+
+	list(T).
+.SH "SEE ALSO"
+mode/2

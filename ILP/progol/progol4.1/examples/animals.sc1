@@ -1,0 +1,277 @@
+Animals example (animals.sc1).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+After the `======' in this file is a session of
+Progol running in batch mode (non-interactively).
+The file animals.sc2 contains an interactive session for the
+animals example.
+
+Below Progol reads in the file animals.pl. It notes all
+mode declarations and adds background knowledge and positive
+and negative examples to its clause base. Have a look at the file
+animals.pl. A mode declaration is a query aimed at the Prolog
+interpreter within Progol. Prolog queries have a `:-' at the
+beginning and a `?' at the end to differentiate them from
+from aserted statements. Thus
+
+  :- modeb(1,has_milk(+animal))?
+
+is a mode declaration describing the form of a literal which can be
+used in a Progol hypothesised clause (see more about mode declarations
+below).
+
+A positive example is a statement such as 
+
+  class(dog,mammal).
+
+A negative example is a statement such as
+
+  :- class(trout,mammal).
+
+Background knowledge is described as arbitrary pieces of Prolog
+code. For instance,
+
+  has_eggs(trout).
+
+is a statement in the background knowledge.
+
+Progol generalises any predicates associated with `modeh'
+(head mode) declarations. In this case, the predicate class/2.
+The statement
+
+  :- modeh(1,class(+animal,#class))? 
+
+says that generalisations must all have the form
+
+  class(A,#) :- ...
+
+where A is an input variable of type animal/1 and # is a constant
+of type class/1. The bodies of generalisations will be constructed
+using `modeb' (body mode) declarations. For instance the declaration
+
+  :- modeb(1,has_milk(+animal))?
+
+allows the generalisation
+
+  class(A,mammal) :- has_milk(A).
+
+In the following Progol first learns constraints such as 
+
+  :- class(A,mammal), class(A,fish).
+
+which says the no mammal is a fish and conversely no fish is a mammal.
+This clause is stored within Progol as
+
+  false :- class(A,mammal), class(A,fish).
+
+This is a generalisation of the negative example
+
+  :- class(trout,mammal).
+
+Following this, general rules are learned for distingishing the
+class of animals. For instance,
+
+  class(A,bird) :- has_covering(A,feathers).
+
+Progol finishes by printing the new definition of class/2.
+Note that snakes are treated as exceptions since all other reptiles
+have 4 legs.
+
+=============
+
+
+scye.comlab_{{24}}? progol animals
+CProgol Version 4.1
+
+[:- set(c,3)? - Time taken 0.00s]
+[:- modeh(1,class(+animal,#class))? - Time taken 0.00s]
+[:- modeb(1,has_milk(+animal))? - Time taken 0.00s]
+[:- modeb(1,has_gills(+animal))? - Time taken 0.00s]
+[:- modeb(1,has_covering(+animal,#covering))? - Time taken 0.00s]
+[:- modeb(1,has_legs(+animal,#nat))? - Time taken 0.00s]
+[:- modeb(1,homeothermic(+animal))? - Time taken 0.00s]
+[:- modeb(1,has_eggs(+animal))? - Time taken 0.00s]
+[:- modeb(100,habitat(+animal,#habitat))? - Time taken 0.00s]
+[:- modeh(1,false)? - Time taken 0.00s]
+[:- modeb(1,class(+animal,#class))? - Time taken 0.00s]
+[Generalising :- class(trout,mammal).]
+[Most specific clause is]
+:- class(A,mammal), class(A,fish), has_gills(A), has_covering(A,
+	scales), has_legs(A,0), has_eggs(A), habitat(A,water).
+[C:40,42,1,0 :- class(A,mammal).]
+[C:5,7,0,0 :- class(A,mammal), class(A,fish).]
+[C:39,42,1,0 :- class(A,mammal), has_legs(A,0).]
+[C:39,42,1,0 :- class(A,mammal), has_eggs(A).]
+[C:39,42,1,0 :- class(A,mammal), habitat(A,water).]
+[C:38,42,1,0 :- class(A,mammal), has_eggs(A), habitat(A,water).]
+[C:38,42,1,0 :- class(A,mammal), has_legs(A,0), habitat(A,water).]
+[7 explored search nodes]
+[f=5,p=7,n=0,h=0]
+[Result of search is]
+:- class(A,mammal), class(A,fish).
+[7 redundant clauses retracted]
+
+[Generalising :- class(lizard,mammal).]
+[Most specific clause is]
+:- class(A,mammal), class(A,reptile), has_covering(A,scales),
+	has_legs(A,4), has_eggs(A), habitat(A,land).
+[C:34,36,1,0 :- class(A,mammal).]
+[C:6,8,0,0 :- class(A,mammal), class(A,reptile).]
+[C:33,36,1,0 :- class(A,mammal), has_legs(A,4).]
+[C:33,36,1,0 :- class(A,mammal), has_eggs(A).]
+[C:33,36,1,0 :- class(A,mammal), habitat(A,land).]
+[C:32,36,1,0 :- class(A,mammal), has_legs(A,4), habitat(A,land).]
+[6 explored search nodes]
+[f=6,p=8,n=0,h=0]
+[Result of search is]
+:- class(A,mammal), class(A,reptile).
+[8 redundant clauses retracted]
+
+[Generalising :- class(eagle,mammal).]
+[Most specific clause is]
+:- class(A,mammal), class(A,bird), has_covering(A,feathers), 
+	has_legs(A,2), homeothermic(A), has_eggs(A), habitat(A,
+	land), habitat(A,air).
+[C:27,29,1,0 :- class(A,mammal).]
+[C:5,7,0,0 :- class(A,mammal), class(A,bird).]
+[C:26,29,1,0 :- class(A,mammal), has_legs(A,2).]
+[C:26,29,1,0 :- class(A,mammal), homeothermic(A).]
+[C:26,29,1,0 :- class(A,mammal), has_eggs(A).]
+[C:26,29,1,0 :- class(A,mammal), habitat(A,land).]
+[C:26,29,1,0 :- class(A,mammal), habitat(A,air).]
+[C:25,29,1,0 :- class(A,mammal), has_legs(A,2), homeothermic(A).]
+[C:25,29,1,0 :- class(A,mammal), has_legs(A,2), has_eggs(A).]
+[C:25,29,1,0 :- class(A,mammal), has_legs(A,2), habitat(A,air).]
+[C:25,29,1,0 :- class(A,mammal), homeothermic(A), has_eggs(A).]
+[C:25,29,1,0 :- class(A,mammal), homeothermic(A), habitat(A,land).]
+[C:25,29,1,0 :- class(A,mammal), homeothermic(A), habitat(A,air).]
+[13 explored search nodes]
+[f=5,p=7,n=0,h=0]
+[Result of search is]
+:- class(A,mammal), class(A,bird).
+[7 redundant clauses retracted]
+
+[Generalising :- class(lizard,fish).]
+[Most specific clause is]
+:- class(A,fish), class(A,reptile), has_covering(A,scales), has_legs(A,
+	4), has_eggs(A), habitat(A,land).
+[C:21,23,1,0 :- class(A,fish).]
+[C:5,7,0,0 :- class(A,fish), class(A,reptile).]
+[C:20,23,1,0 :- class(A,fish), has_covering(A,scales).]
+[C:20,23,1,0 :- class(A,fish), has_eggs(A).]
+[C:19,23,1,0 :- class(A,fish), has_covering(A,scales), has_eggs(A).]
+[5 explored search nodes]
+[f=5,p=7,n=0,h=0]
+[Result of search is]
+:- class(A,fish), class(A,reptile).
+[7 redundant clauses retracted]
+
+[Generalising :- class(eagle,fish).]
+[Most specific clause is]
+:- class(A,fish), class(A,bird), has_covering(A,feathers), has_legs(A,
+	2), homeothermic(A), has_eggs(A), habitat(A,land), habitat(A,
+	air).
+[C:15,17,1,0 :- class(A,fish).]
+[C:4,6,0,0 :- class(A,fish), class(A,bird).]
+[C:14,17,1,0 :- class(A,fish), has_eggs(A).]
+[3 explored search nodes]
+[f=4,p=6,n=0,h=0]
+[Result of search is]
+:- class(A,fish), class(A,bird).
+[6 redundant clauses retracted]
+
+[Generalising :- class(eagle,reptile).]
+[Most specific clause is]
+:- class(A,reptile), class(A,bird), has_covering(A,feathers),
+	has_legs(A,2), homeothermic(A), has_eggs(A), habitat(A,
+	land), habitat(A,air).
+[C:10,12,1,0 :- class(A,reptile).]
+[C:5,7,0,0 :- class(A,reptile), class(A,bird).]
+[C:9,12,1,0 :- class(A,reptile), has_eggs(A).]
+[C:9,12,1,0 :- class(A,reptile), habitat(A,land).]
+[C:8,12,1,0 :- class(A,reptile), has_eggs(A), habitat(A,land).]
+[5 explored search nodes]
+[f=5,p=7,n=0,h=0]
+[Result of search is]
+:- class(A,reptile), class(A,bird).
+[7 redundant clauses retracted]
+
+:- class(A,mammal), class(A,fish).
+:- class(A,mammal), class(A,reptile).
+:- class(A,mammal), class(A,bird).
+:- class(A,fish), class(A,reptile).
+:- class(A,fish), class(A,bird).
+:- class(A,reptile), class(A,bird).
+[Total number of clauses = 6]
+
+[Time taken 1.228s]
+[Generalising class(dog,mammal).]
+[Most specific clause is]
+class(A,mammal) :- has_milk(A), has_covering(A,hair), has_legs(A,
+	4), homeothermic(A), habitat(A,land).
+[C:1,4,3,0 class(A,mammal).]
+[C:3,4,0,0 class(A,mammal) :- has_milk(A).]
+[2 explored search nodes]
+[f=3,p=4,n=0,h=0]
+[Result of search is]
+class(A,mammal) :- has_milk(A).
+[4 redundant clauses retracted]
+
+[Generalising class(trout,fish).]
+[Most specific clause is]
+class(A,fish) :- has_gills(A), has_covering(A,scales), has_legs(A,
+	0), has_eggs(A), habitat(A,water).
+[C:1,4,3,0 class(A,fish).]
+[C:3,4,0,0 class(A,fish) :- has_gills(A).]
+[2 explored search nodes]
+[f=3,p=4,n=0,h=0]
+[Result of search is]
+class(A,fish) :- has_gills(A).
+[4 redundant clauses retracted]
+
+[Generalising class(lizard,reptile).]
+[Most specific clause is]
+class(A,reptile) :- has_covering(A,scales), has_legs(A,4), has_eggs(A),
+	habitat(A,land).
+[C:2,5,3,0 class(A,reptile).]
+[C:3,5,1,0 class(A,reptile) :- has_covering(A,scales).]
+[C:2,4,0,0 class(A,reptile) :- has_covering(A,scales), has_legs(A,4).]
+[C:2,5,1,0 class(A,reptile) :- has_covering(A,scales), has_eggs(A).]
+[C:2,4,1,0 class(A,reptile) :- has_legs(A,4).]
+[C:1,5,3,0 class(A,reptile) :- has_eggs(A).]
+[C:1,4,2,0 class(A,reptile) :- habitat(A,land).]
+[7 explored search nodes]
+[f=2,p=4,n=0,h=0]
+[Result of search is]
+class(A,reptile) :- has_covering(A,scales), has_legs(A,4).
+[4 redundant clauses retracted]
+
+[Generalising class(snake,reptile).]
+[Most specific clause is]
+class(A,reptile) :- has_covering(A,scales), has_legs(A,0), has_eggs(A),
+	habitat(A,land).
+[C:-1,2,3,0 class(A,reptile).]
+[C:0,2,1,0 class(A,reptile) :- has_covering(A,scales).]
+[2 explored search nodes]
+[f=1,p=7,n=6,h=0]
+[No compression]
+
+[Generalising class(eagle,bird).]
+[Most specific clause is]
+class(A,bird) :- has_covering(A,feathers), has_legs(A,2), homeothermic(A),
+	has_eggs(A), habitat(A,land), habitat(A,air).
+[C:0,3,3,0 class(A,bird).]
+[C:2,3,0,0 class(A,bird) :- has_covering(A,feathers).]
+[2 explored search nodes]
+[f=2,p=3,n=0,h=0]
+[Result of search is]
+class(A,bird) :- has_covering(A,feathers).
+[3 redundant clauses retracted]
+
+class(snake,reptile).
+class(A,mammal) :- has_milk(A).
+class(A,fish) :- has_gills(A).
+class(A,bird) :- has_covering(A,feathers).
+class(A,reptile) :- has_covering(A,scales), has_legs(A,4).
+[Total number of clauses = 5]
+
+[Time taken 0.332s]

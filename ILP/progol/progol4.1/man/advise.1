@@ -1,0 +1,26 @@
+.TH advise 1 "September 7, 1994"
+.SH NAME
+advise \- write user-defined predicates to a file. 
+.SH SYNOPSIS
+.B advise(Filename)?
+.SH DESCRIPTION
+.B
+advise/1
+takes as argument a filename, e.g., "memout", and writes to the file
+with that name and a .pl extension, e.g., "memout.pl", the definitions
+of the user-defined predicates.
+The typical use is as follows.
+After a file has been consulted and
+.I Progol
+generalisation has been executed to yield a set of general clauses, the
+positive examples in the predicate
+definition that are entailed by this set of clauses
+have been replaced by the set of clauses.
+The advise command can be used to write this revised, more general
+predicate definition to a file.
+
+.SH EXAMPLES
+.DS 3 1
+        advise(memout)?
+.DE
+.SH "SEE ALSO"

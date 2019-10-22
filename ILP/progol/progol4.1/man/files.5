@@ -1,0 +1,125 @@
+.TH Files 5 "September 7, 1994"
+.SH NAME
+.B FileName.pl \- input file for
+.I
+Progol
+.SH DESCRIPTION
+All input for
+.I
+Progol
+is read from a single file which has a ".pl" suffix.
+The contents of this file are usually:
+.RS
+.TP
+.B 1. Progol commands
+including mode declarations and parameter settings.
+.TP
+.B 2. Background knowledge
+as a set of Prolog clauses.
+.TP
+.B 3. Positive examples
+as a set of definite clauses (not necessarily ground unit clauses).
+.TP
+.B 4. Negative examples
+as a set of ground negative literals. 
+.RE
+Comments can appear anywhere in the file provided they are
+prefaced by a "%" sign.
+.SH EXAMPLES
+Here is an example input file for learning list membership.
+.sp 2
+.DS 0 0
+:- set(c,2)?
+.br
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+.br
+% Learns recursive clauses for member(Element,List)
+.br
+.br
+:- modeh(1,member(-constant,+clist))?
+.br
+:- modeb(1,+constant = #constant)?
+.br
+:- modeb(1,+clist = [-constant|-clist])?
+.br
+:- modeb(1,member(-constant,+clist))?
+.br
+
+.br
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+.br
+% Types
+.br
+
+.br
+clist([]).
+.br
+clist([H|T]) :- constant(H), clist(T).
+.br
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+.br
+% Positive examples
+.br
+
+member(0,[0]).
+.br
+member(0,[0,0]).
+.br
+member(0,[1,0]).
+.br
+member(0,[2,0]).
+.br
+member(1,[0,1]).
+.br
+member(1,[1,1]).
+.br
+member(1,[1]).
+.br
+member(1,[2,1]).
+.br
+member(2,[2,2]).
+.br
+member(2,[2]).
+.br
+member(2,[3,2]).
+.br
+member(3,[2,3]).
+.br
+member(3,[3]).
+.br
+member(4,[3,4,5]).
+.br
+member(3,[4,2,3]).
+.br
+member(4,[4]).
+.br
+
+.br
+% member(X,[X|_]).
+.br
+% member(X,[_,X|_]).
+.br
+
+.br
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+.br
+% Negative examples
+.br
+
+.br
+:- member(0,[1,2]).
+.br
+:- member(0,[1]).
+.br
+:- member(1,[0]).
+.br
+:- member(2,[3]).
+.br
+:- member(2,[]).
+.br
+:- member(3,[]).
+.br
+.DE
+.SH "SEE ALSO"
+set/2, mode/2

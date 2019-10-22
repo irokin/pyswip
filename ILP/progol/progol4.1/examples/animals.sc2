@@ -1,0 +1,355 @@
+Animals example (animals.sc2).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In this script file some of the interactive features of Progol
+are demonstrated. Progol contains a Prolog interpreter which
+sticks closely to Edinburgh syntax. The interpreter is capable
+of running Prolog programs containing cuts, and
+calls to some standard Prolog system predicates including
+is/2, =</2, arg/3, var/1, read/1, and write/1. Comments
+between `======' lines are insterspersed between Progol input an output
+below.
+
+Try starting Progol as follows.
+======
+scye.comlab_{{26}}? progol
+CProgol Version 4.1
+
+|- help?
+The following system predicates are available:
+  !               , /2            -> /2           ; /2            
+  < /2            = /2            =.. /2          =< /2           
+  == /2           > /2            >= /2           @< /2           
+  @=< /2          @> /2           @>= /2          \+ /1           
+  \= /2           \== /2          advise/1        any/1           
+  arg/3           asserta/1       bagof/3         clause/2        
+  clause/3        commutative/1   commutatives    constant/1      
+  consult/1       determination/2 element/2       float/1         
+  functor/3       generalise/1    help            help/1          
+  int/1           is/2            length/2        listing         
+  listing/1       modeb/2         modeh/2         modes           
+  name/2          nat/1           nl              noreductive     
+  nosplit         nospy           not/1           notrace         
+  number/1        op/3            ops             otherwise       
+  parity          read/1          reconsult/1     record/2        
+  reduce/1        reductive       repeat          retract/1       
+  retract/2       see/1           seen            set/2           
+  setof/3         settings        sort/2          spies           
+  split           spy/1           stats           tab/1           
+  tell/1          test/1          told            trace           
+  true            var/1           write/1         
+Help for system predicates using help(Predicate/Arity)
+yes
+[:- help? - Time taken 0.03s]
+
+======
+The query `help?' gives a list of all system predicates defined.
+
+Brief help on any particular command can be got by typing help(Command/Arity)
+for a particular command with given arity. For instance help
+on the command reconsult/1 can be got as follows.
+======
+
+|- help(reconsult/1)?
+[reconsult/1 - reconsults file]
+yes
+[:- help(reconsult/1)? - Time taken 0.00s]
+
+======
+Note that, as with Clocksin and Mellish Prolog, a list of files can be
+reconsulted using the notation [file1,file2,..]
+Below the animals.pl file is reconsulted.
+======
+
+|- [animals]?
+[:- set(c,3)? - Time taken 0.00s]
+[:- modeh(1,class(+animal,#class))? - Time taken 0.00s]
+[:- modeb(1,has_milk(+animal))? - Time taken 0.00s]
+[:- modeb(1,has_gills(+animal))? - Time taken 0.00s]
+[:- modeb(1,has_covering(+animal,#covering))? - Time taken 0.00s]
+[:- modeb(1,has_legs(+animal,#nat))? - Time taken 0.00s]
+[:- modeb(1,homeothermic(+animal))? - Time taken 0.00s]
+[:- modeb(1,has_eggs(+animal))? - Time taken 0.00s]
+[:- modeb(100,habitat(+animal,#habitat))? - Time taken 0.00s]
+[:- modeh(1,false)? - Time taken 0.00s]
+[:- modeb(1,class(+animal,#class))? - Time taken 0.00s]
+yes
+[:- [animals]? - Time taken 0.15s]
+
+======
+A listing of the user-defined predicate class/2 can be produced
+as follows.
+======
+
+|- listing(class/2)?
+class(dog,mammal).
+class(dolphin,mammal).
+class(platypus,mammal).
+class(bat,mammal).
+class(trout,fish).
+class(herring,fish).
+class(shark,fish).
+class(eel,fish).
+class(lizard,reptile).
+class(crocodile,reptile).
+class(t_rex,reptile).
+class(snake,reptile).
+class(turtle,reptile).
+class(eagle,bird).
+class(ostrich,bird).
+class(penguin,bird).
+[Total number of clauses = 16]
+yes
+[:- listing(class/2)? - Time taken 0.02s]
+
+======
+Generalisation of the predicate class/2 is carried out below.
+======
+
+|- generalise(class/2)?
+[Generalising class(dog,mammal).]
+[Most specific clause is]
+class(A,mammal) :- has_milk(A), has_covering(A,hair), has_legs(A,
+	4), homeothermic(A), habitat(A,land).
+[C:-6,4,10,0 class(A,mammal).]
+[C:3,4,0,0 class(A,mammal) :- has_milk(A).]
+[2 explored search nodes]
+[f=3,p=4,n=0,h=0]
+[Result of search is]
+class(A,mammal) :- has_milk(A).
+[4 redundant clauses retracted]
+
+[Generalising class(trout,fish).]
+[Most specific clause is]
+class(A,fish) :- has_gills(A), has_covering(A,scales), has_legs(A,
+	0), has_eggs(A), habitat(A,water).
+[C:-7,4,11,0 class(A,fish).]
+[C:3,4,0,0 class(A,fish) :- has_gills(A).]
+[2 explored search nodes]
+[f=3,p=4,n=0,h=0]
+[Result of search is]
+class(A,fish) :- has_gills(A).
+[4 redundant clauses retracted]
+
+[Generalising class(lizard,reptile).]
+[Most specific clause is]
+class(A,reptile) :- has_covering(A,scales), has_legs(A,4), has_eggs(A),
+	habitat(A,land).
+[C:-5,5,10,0 class(A,reptile).]
+[C:2,5,2,0 class(A,reptile) :- has_covering(A,scales).]
+[C:2,4,0,0 class(A,reptile) :- has_covering(A,scales), has_legs(A,4).]
+[C:1,5,2,0 class(A,reptile) :- has_covering(A,scales), has_eggs(A).]
+[C:2,4,1,0 class(A,reptile) :- has_legs(A,4).]
+[C:-3,5,7,0 class(A,reptile) :- has_eggs(A).]
+[C:0,4,3,0 class(A,reptile) :- habitat(A,land).]
+[7 explored search nodes]
+[f=2,p=4,n=0,h=0]
+[Result of search is]
+class(A,reptile) :- has_covering(A,scales), has_legs(A,4).
+[4 redundant clauses retracted]
+
+[Generalising class(snake,reptile).]
+[Most specific clause is]
+class(A,reptile) :- has_covering(A,scales), has_legs(A,0), has_eggs(A),
+	habitat(A,land).
+[C:-8,2,10,0 class(A,reptile).]
+[C:-1,2,2,0 class(A,reptile) :- has_covering(A,scales).]
+[2 explored search nodes]
+[f=-1,p=2,n=2,h=0]
+[No compression]
+
+[Generalising class(eagle,bird).]
+[Most specific clause is]
+class(A,bird) :- has_covering(A,feathers), has_legs(A,2), homeothermic(A),
+	has_eggs(A), habitat(A,land), habitat(A,air).
+[C:-8,3,11,0 class(A,bird).]
+[C:2,3,0,0 class(A,bird) :- has_covering(A,feathers).]
+[2 explored search nodes]
+[f=2,p=3,n=0,h=0]
+[Result of search is]
+class(A,bird) :- has_covering(A,feathers).
+[3 redundant clauses retracted]
+
+class(snake,reptile).
+class(A,mammal) :- has_milk(A).
+class(A,fish) :- has_gills(A).
+class(A,bird) :- has_covering(A,feathers).
+class(A,reptile) :- has_covering(A,scales), has_legs(A,4).
+[Total number of clauses = 5]
+
+yes
+[:- generalise(class/2)? - Time taken 0.32s]
+
+======
+Another request for a listing demonstrates the changes made by
+generalisation.
+======
+
+|- listing(class/2)?
+class(snake,reptile).
+class(A,mammal) :- has_milk(A).
+class(A,fish) :- has_gills(A).
+class(A,bird) :- has_covering(A,feathers).
+class(A,reptile) :- has_covering(A,scales), has_legs(A,4).
+yes
+[:- listing(class/2)? - Time taken 0s]
+
+======
+Generalisation of the predicate false is carried out below.
+======
+
+|- generalise(false)?
+[Generalising :- class(trout,mammal).]
+[Most specific clause is]
+:- class(A,mammal), class(A,fish), has_gills(A), has_covering(A,
+	scales), has_legs(A,0), has_eggs(A), habitat(A,water).
+[C:40,42,1,0 :- class(A,mammal).]
+[C:5,7,0,0 :- class(A,mammal), class(A,fish).]
+[C:39,42,1,0 :- class(A,mammal), has_legs(A,0).]
+[C:39,42,1,0 :- class(A,mammal), has_eggs(A).]
+[C:39,42,1,0 :- class(A,mammal), habitat(A,water).]
+[C:38,42,1,0 :- class(A,mammal), has_eggs(A), habitat(A,water).]
+[C:38,42,1,0 :- class(A,mammal), has_legs(A,0), habitat(A,water).]
+[7 explored search nodes]
+[f=5,p=7,n=0,h=0]
+[Result of search is]
+:- class(A,mammal), class(A,fish).
+[7 redundant clauses retracted]
+
+[Generalising :- class(lizard,mammal).]
+[Most specific clause is]
+:- class(A,mammal), class(A,reptile), has_covering(A,scales),
+	has_legs(A,4), has_eggs(A), habitat(A,land).
+[C:34,36,1,0 :- class(A,mammal).]
+[C:6,8,0,0 :- class(A,mammal), class(A,reptile).]
+[C:33,36,1,0 :- class(A,mammal), has_legs(A,4).]
+[C:33,36,1,0 :- class(A,mammal), has_eggs(A).]
+[C:33,36,1,0 :- class(A,mammal), habitat(A,land).]
+[C:32,36,1,0 :- class(A,mammal), has_legs(A,4), habitat(A,land).]
+[6 explored search nodes]
+[f=6,p=8,n=0,h=0]
+[Result of search is]
+:- class(A,mammal), class(A,reptile).
+[8 redundant clauses retracted]
+
+[Generalising :- class(eagle,mammal).]
+[Most specific clause is]
+:- class(A,mammal), class(A,bird), has_covering(A,feathers), 
+	has_legs(A,2), homeothermic(A), has_eggs(A), habitat(A,
+	land), habitat(A,air).
+[C:27,29,1,0 :- class(A,mammal).]
+[C:5,7,0,0 :- class(A,mammal), class(A,bird).]
+[C:26,29,1,0 :- class(A,mammal), has_legs(A,2).]
+[C:26,29,1,0 :- class(A,mammal), homeothermic(A).]
+[C:26,29,1,0 :- class(A,mammal), has_eggs(A).]
+[C:26,29,1,0 :- class(A,mammal), habitat(A,land).]
+[C:26,29,1,0 :- class(A,mammal), habitat(A,air).]
+[C:25,29,1,0 :- class(A,mammal), homeothermic(A), has_eggs(A).]
+[C:25,29,1,0 :- class(A,mammal), homeothermic(A), habitat(A,land).]
+[C:25,29,1,0 :- class(A,mammal), homeothermic(A), habitat(A,air).]
+[C:25,29,1,0 :- class(A,mammal), has_legs(A,2), homeothermic(A).]
+[C:25,29,1,0 :- class(A,mammal), has_legs(A,2), has_eggs(A).]
+[C:25,29,1,0 :- class(A,mammal), has_legs(A,2), habitat(A,air).]
+[13 explored search nodes]
+[f=5,p=7,n=0,h=0]
+[Result of search is]
+:- class(A,mammal), class(A,bird).
+[7 redundant clauses retracted]
+
+[Generalising :- class(lizard,fish).]
+[Most specific clause is]
+:- class(A,fish), class(A,reptile), has_covering(A,scales), has_legs(A,
+	4), has_eggs(A), habitat(A,land).
+[C:21,23,1,0 :- class(A,fish).]
+[C:5,7,0,0 :- class(A,fish), class(A,reptile).]
+[C:20,23,1,0 :- class(A,fish), has_covering(A,scales).]
+[C:20,23,1,0 :- class(A,fish), has_eggs(A).]
+[C:19,23,1,0 :- class(A,fish), has_covering(A,scales), has_eggs(A).]
+[5 explored search nodes]
+[f=5,p=7,n=0,h=0]
+[Result of search is]
+:- class(A,fish), class(A,reptile).
+[7 redundant clauses retracted]
+
+[Generalising :- class(eagle,fish).]
+[Most specific clause is]
+:- class(A,fish), class(A,bird), has_covering(A,feathers), has_legs(A,
+	2), homeothermic(A), has_eggs(A), habitat(A,land), habitat(A,
+	air).
+[C:15,17,1,0 :- class(A,fish).]
+[C:4,6,0,0 :- class(A,fish), class(A,bird).]
+[C:14,17,1,0 :- class(A,fish), has_eggs(A).]
+[3 explored search nodes]
+[f=4,p=6,n=0,h=0]
+[Result of search is]
+:- class(A,fish), class(A,bird).
+[6 redundant clauses retracted]
+
+[Generalising :- class(eagle,reptile).]
+[Most specific clause is]
+:- class(A,reptile), class(A,bird), has_covering(A,feathers),
+	has_legs(A,2), homeothermic(A), has_eggs(A), habitat(A,
+	land), habitat(A,air).
+[C:10,12,1,0 :- class(A,reptile).]
+[C:5,7,0,0 :- class(A,reptile), class(A,bird).]
+[C:9,12,1,0 :- class(A,reptile), has_eggs(A).]
+[C:9,12,1,0 :- class(A,reptile), habitat(A,land).]
+[C:8,12,1,0 :- class(A,reptile), has_eggs(A), habitat(A,land).]
+[5 explored search nodes]
+[f=5,p=7,n=0,h=0]
+[Result of search is]
+:- class(A,reptile), class(A,bird).
+[7 redundant clauses retracted]
+
+:- class(A,mammal), class(A,fish).
+:- class(A,mammal), class(A,reptile).
+:- class(A,mammal), class(A,bird).
+:- class(A,fish), class(A,reptile).
+:- class(A,fish), class(A,bird).
+:- class(A,reptile), class(A,bird).
+[Total number of clauses = 6]
+
+yes
+[:- generalise(false)? - Time taken 1.63s]
+
+======
+Another request for a listing demonstrates the changes made by
+generalisation.
+======
+
+|- listing(false)?
+:- class(A,mammal), class(A,fish).
+:- class(A,mammal), class(A,reptile).
+:- class(A,mammal), class(A,bird).
+:- class(A,fish), class(A,reptile).
+:- class(A,fish), class(A,bird).
+:- class(A,reptile), class(A,bird).
+[Total number of clauses = 6]
+yes
+[:- listing(false)? - Time taken 0.02s]
+
+======
+The query `listing?' without arguments gives the user-defined predicates.
+======
+
+|- listing?
+The following user predicates are defined:
+  animal/1       class/1        class/2        covering/1     habitat/1
+  habitat/2      has_covering/2 has_eggs/1     has_gills/1    has_legs/2
+  has_milk/1     homeothermic/1
+[Total number of clauses = 110]
+yes
+[:- listing? - Time taken 0.00s]
+
+======
+User-defined predicates can be queried as follows.
+======
+
+|- class(trout,X)?
+X = fish ;
+no
+[:- class(trout,X)? - Time taken 16ms]
+|- ^D
+
+======
+The session is closed using ^D (end of file).
+======

@@ -1,0 +1,5 @@
+gunzip trains.tar.gz
+tar xvf trains.tar
+rm trains.tar
+cd trains
+cd ..
